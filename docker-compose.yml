@@ -1,0 +1,13 @@
+version: '1.0'
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    volumes:
+      - h2-data:/usr/local/tomcat/h2-data
+
+volumes:
+  h2-data:
