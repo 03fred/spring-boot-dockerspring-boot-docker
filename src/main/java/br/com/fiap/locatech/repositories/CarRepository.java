@@ -11,7 +11,7 @@ public interface CarRepository {
 
 	List<Car> findAll(int size, int offset);
 
-	Integer save(Car car, Long id);
+	Integer save(Car car);
 
 	Integer update(Car car, Long id);
 

@@ -20,20 +20,20 @@ public class CarRepositoryImp implements CarRepository {
 	@Override
 	public Optional<Car> findById(Long id) {
 		// TODO Auto-generated method stub
-		return this.jdbcClient.sql("SELECT * FROM CAR WHERE ID = :id").param("id", id).query(Car.class).optional();
+		return this.jdbcClient.sql("SELECT * FROM cars WHERE ID = :id").param("id", id).query(Car.class).optional();
 	}
 
 	@Override
 	public List<Car> findAll(int size, int offset) {
-		return this.jdbcClient.sql("SELECT * FROM CAR LIMIT :size OFFSET :offset").param("size", size)
+		return this.jdbcClient.sql("SELECT * FROM cars LIMIT :size OFFSET :offset").param("size", size)
 				.param("offsite", offset).query(Car.class).list();
 
 	}
 
 	@Override
-	public Integer save(Car car, Long id) {
+	public Integer save(Car car) {
 		return this.jdbcClient.sql(
-				"INSERT INTO CAR(model, brand, carLicensePlate, year, color, dailyValue) VALUES (:model, :brand, :carLicensePlate, :year, :color, :dailyValue)")
+				"INSERT INTO cars(model, brand, carLicensePlate, year, color, dailyValue) VALUES (:model, :brand, :carLicensePlate, :year, :color, :dailyValue)")
 				.param("model", car.getModel()).param("brand", car.getBrand())
 				.param("carLicensePlate", car.getCarLicensePlate()).param("year", car.getYear())
 				.param("color", car.getColor()).param("dailyValue", car.getDailyValue()).update();
@@ -42,7 +42,7 @@ public class CarRepositoryImp implements CarRepository {
 	@Override
 	public Integer update(Car car, Long id) {
 		return this.jdbcClient.sql(
-				"UPDATE CAR SET model = :model, brand = :brand, carLicensePlate = :carLicensePlate, year = :year, color = :color, dailyValue = :dailyValue WHERE id = :id )")
+				"UPDATE cars SET model = :model, brand = :brand, carLicensePlate = :carLicensePlate, year = :year, color = :color, dailyValue = :dailyValue WHERE id = :id )")
 				.param("model", car.getModel()).param("brand", car.getBrand())
 				.param("carLicensePlate", car.getCarLicensePlate()).param("year", car.getYear())
 				.param("color", car.getColor()).param("dailyValue", car.getDailyValue()).param("id", "id").update();
@@ -50,7 +50,7 @@ public class CarRepositoryImp implements CarRepository {
 
 	@Override
 	public Integer delete(Long id) {
-		return this.jdbcClient.sql("DELETE CAR WHERE ID = :id").param("id", id).update();
+		return this.jdbcClient.sql("DELETE cars WHERE ID = :id").param("id", id).update();
 
 	}
 
