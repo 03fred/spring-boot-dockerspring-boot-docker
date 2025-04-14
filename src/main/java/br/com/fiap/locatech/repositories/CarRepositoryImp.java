@@ -26,26 +26,35 @@ public class CarRepositoryImp implements CarRepository {
 	@Override
 	public List<Car> findAll(int size, int offset) {
 		return this.jdbcClient.sql("SELECT * FROM cars LIMIT :size OFFSET :offset").param("size", size)
-				.param("offsite", offset).query(Car.class).list();
+				.param("offset", offset).query(Car.class).list();
 
 	}
 
 	@Override
 	public Integer save(Car car) {
 		return this.jdbcClient.sql(
-				"INSERT INTO cars(model, brand, carLicensePlate, year, color, dailyValue) VALUES (:model, :brand, :carLicensePlate, :year, :color, :dailyValue)")
-				.param("model", car.getModel()).param("brand", car.getBrand())
-				.param("carLicensePlate", car.getCarLicensePlate()).param("year", car.getYear())
-				.param("color", car.getColor()).param("dailyValue", car.getDailyValue()).update();
+				"INSERT INTO cars(model, brand, car_license_plate, car_year, color, daily_value)  VALUES (:model, :brand, :carLicensePlate, :year, :color, :dailyValue)")
+				.param("model", car.getModel())
+				.param("brand", car.getBrand())
+				.param("carLicensePlate", car.getCarLicensePlate())
+				.param("year", car.getYear())
+				.param("color", car.getColor())
+				.param("dailyValue", car.getDailyValue())
+				.update();
 	}
-
+	
 	@Override
 	public Integer update(Car car, Long id) {
 		return this.jdbcClient.sql(
-				"UPDATE cars SET model = :model, brand = :brand, carLicensePlate = :carLicensePlate, year = :year, color = :color, dailyValue = :dailyValue WHERE id = :id )")
-				.param("model", car.getModel()).param("brand", car.getBrand())
-				.param("carLicensePlate", car.getCarLicensePlate()).param("year", car.getYear())
-				.param("color", car.getColor()).param("dailyValue", car.getDailyValue()).param("id", "id").update();
+				"UPDATE cars SET model = :model, brand = :brand, car_license_plate = :carLicensePlate, car_year = :year, color = :color, daily_value = :dailyValue WHERE id = :id ")
+				.param("model", car.getModel())
+				.param("brand", car.getBrand())
+				.param("carLicensePlate", car.getCarLicensePlate())
+				.param("year", car.getYear())
+				.param("color", car.getColor())
+				.param("dailyValue", car.getDailyValue())
+				.param("id", car.getId())
+				.update();
 	}
 
 	@Override

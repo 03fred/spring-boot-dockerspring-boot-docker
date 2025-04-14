@@ -53,7 +53,7 @@ public class CarController {
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<Void> saveCar(@PathVariable("id") Long id, @RequestBody Car car) {
+	public ResponseEntity<Void> updateCar(@PathVariable("id") Long id, @RequestBody Car car) {
 		logger.info("Foi acessado o endpoint atualizar um veiculo");
 		this.carService.updateCar(car, id);
 		return ResponseEntity.status(204).build();

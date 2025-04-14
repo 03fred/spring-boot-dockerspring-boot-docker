@@ -20,7 +20,7 @@ public class CarService {
 
 	public List<Car> findAll(int page, int size) {
 		int offset = (page - 1) * size;
-		return this.carRepository.findAll(page, offset);
+		return this.carRepository.findAll(size, offset);
 	}
 
 	public Optional<Car> findCarById(Long id) {
