@@ -1,4 +1,4 @@
-name: Enviar commit para o Trello
+name: Enviar commit para Trello
 
 on:
   push:
