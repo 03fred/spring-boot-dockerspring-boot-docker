@@ -1,4 +1,30 @@
-curl -X POST "https://api.trello.com/1/cards/{idCard}/actions/comments" \
-  -d "text=Commit feito: $GITHUB_SHA" \
-  -d "key=${{ secrets.TRELLO_API_KEY }}" \
-  -d "token=${{ secrets.TRELLO_TOKEN }}"
+name: Enviar commit para Trello
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  comentar-no-trello:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checar código
+        uses: actions/checkout@v3
+
+      - name: Comentar no card do Trello
+        run: |
+          COMMIT_MSG=$(git log -1 --pretty=%B)
+          echo "Commit: $COMMIT_MSG"
+
+          # Extrai o ID do card do commit (ex: #abc123)
+          CARD_ID=$(echo "$COMMIT_MSG" | grep -oE '#[a-zA-Z0-9]+' | sed 's/#//')
+          
+          if [ -n "$CARD_ID" ]; then
+            curl -X POST "https://api.trello.com/1/cards/$CARD_ID/actions/comments" \
+              -d "text=Novo commit: $COMMIT_MSG" \
+              -d "key=${{ secrets.TRELLO_API_KEY }}" \
+              -d "token=${{ secrets.TRELLO_API_SECRET }}"
+          else
+            echo "Nenhum card ID encontrado no commit."
+          fi
