@@ -25,10 +25,8 @@ jobs:
           if [ -n "$CARD_ID" ]; then
             # Cria a URL do commit no GitHub
             COMMIT_URL="https://github.com/${{ github.repository }}/commit/${{ github.sha }}"
-            COMMENT="Novo commit na branch main: $COMMIT_MSG
-
-🔗 [Ver Commit]($COMMIT_URL)"
-
+            COMMENT="Novo commit na branch main: $COMMIT_MSG ($COMMIT_URL)"
+            
             # Envia o comentário para o Trello
             curl -X POST "https://api.trello.com/1/cards/$CARD_ID/actions/comments" \
               -d "text=$COMMENT" \
