@@ -23,8 +23,8 @@ jobs:
           if [ -n "$CARD_ID" ]; then
             curl -X POST "https://api.trello.com/1/cards/$CARD_ID/actions/comments" \
               -d "text=Novo commit: $COMMIT_MSG" \
-              -d "key=${{ secrets.TRELLO_API_KEY }}" \
-              -d "token=${{ secrets.TRELLO_API_SECRET }}"
+              -d "key=${{ secrets.TRELLO_API_SECRET }}" \
+              -d "token=${{ secrets.TRELLO_API_KEY }}"
           else
             echo "Nenhum card ID encontrado no commit."
           fi
