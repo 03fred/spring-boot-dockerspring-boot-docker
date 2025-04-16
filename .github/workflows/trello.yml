@@ -1,0 +1,4 @@
+curl -X POST "https://api.trello.com/1/cards/{idCard}/actions/comments" \
+  -d "text=Commit feito: $GITHUB_SHA" \
+  -d "key=${{ secrets.TRELLO_API_KEY }}" \
+  -d "token=${{ secrets.TRELLO_TOKEN }}"
