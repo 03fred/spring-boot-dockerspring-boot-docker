@@ -15,6 +15,7 @@ jobs:
 
       - name: Comentar no card do Trello com link do commit
         run: |
+          # Obtém a mensagem do último commit
           COMMIT_MSG=$(git log -1 --pretty=%B)
           echo "Commit: $COMMIT_MSG"
 
@@ -22,11 +23,13 @@ jobs:
           CARD_ID=$(echo "$COMMIT_MSG" | grep -oE '#[a-zA-Z0-9]+' | sed 's/#//')
 
           if [ -n "$CARD_ID" ]; then
+            # Cria a URL do commit no GitHub
             COMMIT_URL="https://github.com/${{ github.repository }}/commit/${{ github.sha }}"
             COMMENT="Novo commit na branch main: $COMMIT_MSG
 
-🔗 [$COMMIT_URL]($COMMIT_URL)"
+🔗 [Ver Commit]($COMMIT_URL)"
 
+            # Envia o comentário para o Trello
             curl -X POST "https://api.trello.com/1/cards/$CARD_ID/actions/comments" \
               -d "text=$COMMENT" \
               -d "key=${{ secrets.TRELLO_API_SECRET }}" \
