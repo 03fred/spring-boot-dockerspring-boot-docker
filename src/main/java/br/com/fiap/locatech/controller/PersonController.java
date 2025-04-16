@@ -16,53 +16,53 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.fiap.locatech.entities.Car;
-import br.com.fiap.locatech.services.CarService;
+import br.com.fiap.locatech.entities.Person;
+import br.com.fiap.locatech.services.PersonService;
 
 @RestController
-@RequestMapping("/cars")
-public class CarController {
+@RequestMapping("/people")
+public class PersonController {
 
-	private static final Logger logger = LoggerFactory.getLogger(CarController.class);
+	private static final Logger logger = LoggerFactory.getLogger(PersonController.class);
 
-	private final CarService carService;
+	private final PersonService personService;
 
-	public CarController(CarService carService) {
-		this.carService = carService;
+	public PersonController(PersonService personService) {
+		this.personService = personService;
 	}
 
 	@GetMapping
-	public ResponseEntity<List<Car>> findAllCar(@RequestParam("page") int page, @RequestParam("size") int size) {
+	public ResponseEntity<List<Person>> findAllPerson(@RequestParam("page") int page, @RequestParam("size") int size) {
 		logger.info("Foi acessado o endpoint buscar todos os veiculos");
-		var cars = this.carService.findAll(page, size);
+		var cars = this.personService.findAll(page, size);
 		return ResponseEntity.ok(cars);
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<Optional<Car>> findCar(@PathVariable("id") Long id) {
+	public ResponseEntity<Optional<Person>> findPerson(@PathVariable("id") Long id) {
 		logger.info("Foi acessado o endpoint buscar um veiculo");
-		var car = this.carService.findCarById(id);
-		return ResponseEntity.ok(car);
+		var person = this.personService.findPersonById(id);
+		return ResponseEntity.ok(person);
 	}
 
 	@PostMapping
-	public ResponseEntity<Void> saveCar(@RequestBody Car car) {
+	public ResponseEntity<Void> savePerson(@RequestBody Person person) {
 		logger.info("Foi acessado o endpoint salvar um veiculo");
-		this.carService.saveCar(car);
+		this.personService.savePerson(person);
 		return ResponseEntity.status(201).build();
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<Void> updateCar(@PathVariable("id") Long id, @RequestBody Car car) {
+	public ResponseEntity<Void> updatePerson(@PathVariable("id") Long id, @RequestBody Person person) {
 		logger.info("Foi acessado o endpoint atualizar um veiculo");
-		this.carService.updateCar(car, id);
+		this.personService.updatePerson(person, id);
 		return ResponseEntity.status(204).build();
 	}
 
 	@DeleteMapping("/{id}")
-	public ResponseEntity<Void> deleteCar(@PathVariable("id") Long id) {
-		logger.info("Foi acessado o endpoint deletar um veiculo");
-		this.carService.delete(id);
+	public ResponseEntity<Void> deletePerson(@PathVariable("id") Long id) {
+		logger.info("Foi acessado o endpoint deletar uma pessoa");
+		this.personService.delete(id);
 		return ResponseEntity.status(204).build();
 	}
 

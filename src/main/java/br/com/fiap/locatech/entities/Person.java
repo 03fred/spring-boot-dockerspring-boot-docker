@@ -11,7 +11,7 @@ import lombok.*;
 public class Person {
 
 	private Long id;
-	private String name;
+	private String PersonName;
 	private String phone;
 	private String cpf;
 	private String email;

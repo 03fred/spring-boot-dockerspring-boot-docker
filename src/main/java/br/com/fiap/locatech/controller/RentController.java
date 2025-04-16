@@ -16,53 +16,55 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.fiap.locatech.entities.Car;
-import br.com.fiap.locatech.services.CarService;
+import br.com.fiap.locatech.dto.RentRequestDTO;
+import br.com.fiap.locatech.entities.Rent;
+import br.com.fiap.locatech.services.RentService;
+import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/cars")
-public class CarController {
+@RequestMapping("/rent")
+public class RentController {
 
-	private static final Logger logger = LoggerFactory.getLogger(CarController.class);
+	private static final Logger logger = LoggerFactory.getLogger(RentController.class);
 
-	private final CarService carService;
+	private final RentService rentService;
 
-	public CarController(CarService carService) {
-		this.carService = carService;
+	public RentController(RentService rentService) {
+		this.rentService = rentService;
 	}
 
 	@GetMapping
-	public ResponseEntity<List<Car>> findAllCar(@RequestParam("page") int page, @RequestParam("size") int size) {
+	public ResponseEntity<List<Rent>> findAllRent(@RequestParam("page") int page, @RequestParam("size") int size) {
 		logger.info("Foi acessado o endpoint buscar todos os veiculos");
-		var cars = this.carService.findAll(page, size);
+		var cars = this.rentService.findAll(page, size);
 		return ResponseEntity.ok(cars);
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<Optional<Car>> findCar(@PathVariable("id") Long id) {
+	public ResponseEntity<Optional<Rent>> findRend(@PathVariable("id") Long id) {
 		logger.info("Foi acessado o endpoint buscar um veiculo");
-		var car = this.carService.findCarById(id);
-		return ResponseEntity.ok(car);
+		var person = this.rentService.findRentById(id);
+		return ResponseEntity.ok(person);
 	}
 
 	@PostMapping
-	public ResponseEntity<Void> saveCar(@RequestBody Car car) {
+	public ResponseEntity<Void> saveRent(@Valid @RequestBody RentRequestDTO person) {
 		logger.info("Foi acessado o endpoint salvar um veiculo");
-		this.carService.saveCar(car);
+		this.rentService.saveRent(person);
 		return ResponseEntity.status(201).build();
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<Void> updateCar(@PathVariable("id") Long id, @RequestBody Car car) {
+	public ResponseEntity<Void> updateRent(@PathVariable("id") Long id, @Valid @RequestBody RentRequestDTO rentDto) {
 		logger.info("Foi acessado o endpoint atualizar um veiculo");
-		this.carService.updateCar(car, id);
+		this.rentService.updateRent(rentDto, id);
 		return ResponseEntity.status(204).build();
 	}
 
 	@DeleteMapping("/{id}")
-	public ResponseEntity<Void> deleteCar(@PathVariable("id") Long id) {
-		logger.info("Foi acessado o endpoint deletar um veiculo");
-		this.carService.delete(id);
+	public ResponseEntity<Void> deleteRent(@PathVariable("id") Long id) {
+		logger.info("Foi acessado o endpoint deletar uma pessoa");
+		this.rentService.delete(id);
 		return ResponseEntity.status(204).build();
 	}
 
